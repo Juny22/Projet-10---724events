@@ -16,6 +16,7 @@ const EventList = () => {
 
   // Filtrer les événements en fonction de la catégorie sélectionnée
   const filteredEvents = data?.events.filter((event) => {
+    console.log("type:",type)
     if (!type || event.type === type) {
       console.log(`Événement inclus : ${event.title}, Type : ${event.type}`);
       return true;
@@ -25,6 +26,7 @@ const EventList = () => {
   }).slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
 
   const changeType = (evtType) => {
+    console.log(evtType,"changeType")
     setCurrentPage(1);
     setType(evtType);
   };
@@ -45,7 +47,7 @@ const EventList = () => {
           <h3 className="SelectTitle">Catégories</h3>
           <Select
             selection={typeList}
-            onChange={changeType}
+            onChange={(newValue) => changeType(newValue)}
           />
           <div id="events" className="ListContainer">
             {filteredEvents.map((event) => (
