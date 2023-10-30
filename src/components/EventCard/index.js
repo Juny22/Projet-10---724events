@@ -5,13 +5,13 @@ import "./style.scss";
 
 const EventCard = ({
   imageSrc,
-  imageAlt,
+  imageAlt, 
   date = new Date(),
   title,
   label,
   small = false,
   ...props
-}) => (
+}) => /* (
     <div
       data-testid="card-testid"
       className={`EventCard${small ? " EventCard--small" : ""}`}
@@ -26,7 +26,27 @@ const EventCard = ({
         <div className="EventCard__month">{getMonth(date)}</div>
       </div>
     </div>
-  );
+  ); */
+  {
+    console.log("Valeur de date :", date); // Ajoutez cette ligne pour vérifier la valeur de la date
+  
+    return (
+      <div
+        data-testid="card-testid"
+        className={`EventCard${small ? " EventCard--small" : ""}`}
+        {...props}
+      >
+        <div className="EventCard__imageContainer">
+          <img data-testid="card-image-testid" src={imageSrc} alt={imageAlt} />
+          <div className="EventCard__label">{label}</div>
+        </div>
+        <div className="EventCard__descriptionContainer">
+          <div className="EventCard__title">{title}</div>
+          <div className="EventCard__month">{getMonth(date)}</div>
+        </div>
+      </div>
+    );
+  };
 
 EventCard.propTypes = {
   imageSrc: PropTypes.string.isRequired,
