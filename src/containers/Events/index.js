@@ -16,24 +16,33 @@ const EventList = () => {
 
   // Filtrer les événements en fonction de la catégorie sélectionnée
   const filteredEvents = data?.events.filter((event) => {
-    console.log("type:",type)
     if (!type || event.type === type) {
-      console.log(`Événement inclus : ${event.title}, Type : ${event.type}`);
       return true;
     }
-    console.log(`Événement exclu : ${event.title}, Type : ${event.type}`);
     return false;
   }).slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
 
   const changeType = (evtType) => {
-    console.log(evtType,"changeType")
     setCurrentPage(1);
     setType(evtType);
   };
 
-  // Calculez le nombre de pages nécessaires en fonction du nombre d'événements filtrés
-  const pageNumber = filteredEvents ? Math.ceil(filteredEvents.length / PER_PAGE) : 0;
-  
+  let calculatedPageNumber = 0;
+
+if (filteredEvents) {
+  calculatedPageNumber = Math.ceil(filteredEvents.length / PER_PAGE);
+}
+
+let pageNumber = calculatedPageNumber; // Utilisez une nouvelle variable pour stocker le nombre de pages
+
+// Si le filtre "tous" est activé, ajustez le nombre de pages
+if (!type && calculatedPageNumber > 0) {
+  const totalEvents = data.events.length;
+  const allPages = Math.ceil(totalEvents / PER_PAGE);
+  // Utilisez un minimum de 1 page, même si aucun événement est trouvé
+  pageNumber = Math.max(allPages, 1);
+}
+
   // Obtenez la liste des catégories uniques à partir des événements
   const typeList = [...new Set(data?.events.map((event) => event.type))];
 
@@ -50,7 +59,7 @@ const EventList = () => {
             onChange={(newValue) => changeType(newValue)}
           />
           <div id="events" className="ListContainer">
-            {filteredEvents.map((event) => (
+            {filteredEvents && filteredEvents.map((event) => (
               <Modal key={event.id} Content={<ModalEvent event={event} />}>
                 {({ setIsOpened }) => (
                   <EventCard
