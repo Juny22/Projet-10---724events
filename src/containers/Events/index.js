@@ -59,7 +59,7 @@ if (!type && calculatedPageNumber > 0) {
             onChange={(newValue) => changeType(newValue)}
           />
           <div id="events" className="ListContainer">
-            {filteredEvents && filteredEvents.map((event) => (
+            {filteredEvents && filteredEvents.length > 0 && filteredEvents.map((event) => (
               <Modal key={event.id} Content={<ModalEvent event={event} />}>
                 {({ setIsOpened }) => (
                   <EventCard
