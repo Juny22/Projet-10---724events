@@ -50,6 +50,7 @@ if (!type && calculatedPageNumber > 0) {
     <>
       {error && <div>An error occurred</div>}
       {data === null ? (
+        !error && 
         "Loading"
       ) : (
         <>
