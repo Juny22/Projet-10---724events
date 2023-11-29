@@ -16,6 +16,7 @@ export const api = {
   },
 };
 
+
 export const DataProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
